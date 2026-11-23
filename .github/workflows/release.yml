@@ -53,8 +53,19 @@ jobs:
             exit 1
           fi
 
+      - name: Check the registry
+        id: registry
+        run: |
+          version="$(node -p "require('./package.json').version")"
+          if npm view "dsh-quota-inline@$version" version >/dev/null 2>&1; then
+            echo "published=true" >> "$GITHUB_OUTPUT"
+            echo "dsh-quota-inline@$version is already on npm; skipping publish"
+          else
+            echo "published=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Publish
-        if: startsWith(github.ref, 'refs/tags/v') && (github.event_name != 'workflow_dispatch' || inputs.dry-run == false)
+        if: startsWith(github.ref, 'refs/tags/v') && steps.registry.outputs.published == 'false'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npm publish --access public
