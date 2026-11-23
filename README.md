@@ -6,13 +6,9 @@
 
 One compact reading of the current model's balance or usage window, in the composer tool row, immediately left of the model selector.
 
-```
-┌──────────────────────────────────────────────────────────┐
-│                                                          │
-└──────────────────────────────────────────────────────────┘
-  +   权限  Plan        余额 ¥128.40   DeepSeek Flash ▾   ↑
-                        ^^^^^^^^^^^^ 这个读数
-```
+![The reading in the composer tool row, immediately left of the model selector](https://raw.githubusercontent.com/pidongqianqian/dsh-quota-inline/main/docs/badge.png)
+
+*The reading follows the model it sits next to; the amount above is an example value.*
 
 It follows the session's model: switch to `deepseek-account` and the badge shows the wallet; switch to `deepseek-official` and it shows that API key's balance; point it at a relay that reports weekly or monthly limits and it shows the remaining percentage of the tightest window.
 
