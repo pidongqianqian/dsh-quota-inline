@@ -6,6 +6,18 @@ Notable changes, newest first. The format follows
 
 ## [Unreleased]
 
+## [0.1.1] — 2026-11-23
+
+### Changed
+
+- The README shows a real screenshot of the composer tool row instead of an
+  ASCII sketch; the balance in it is an example value.
+
+### Added
+
+- `docs/badge.png`, referenced from `README.md` through a raw GitHub URL so npm
+  and the plugin catalogs render it too.
+
 ## [0.1.0] — 2026-11-23
 
 ### Added

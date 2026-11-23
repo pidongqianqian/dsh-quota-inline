@@ -1,6 +1,6 @@
 {
   "name": "dsh-quota-inline",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Balance or usage-window reading in the composer tool row, immediately left of the model selector, for DeepSeek Harness.",
   "license": "MIT",
   "author": "pidongqianqian",
