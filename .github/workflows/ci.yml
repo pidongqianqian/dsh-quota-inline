@@ -1,0 +1,35 @@
+name: CI
+
+# The plugin mounts a Host route and a client seat, so both halves keep a cheap
+# regression suite: Node-side cases over the pure functions and the module
+# wiring, plus the shape of the publishable tarball.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Node-side suites
+        run: npm test
+
+      - name: Publishable tarball shape
+        run: npm run pack:check

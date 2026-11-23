@@ -1,0 +1,3 @@
+- insert:
+    - id: quota-inline
+      name: dsh-quota-inline

@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "额度徽标",
+    "description": "在输入框工具栏、模型选择器左侧显示当前模型的余额或限额窗口百分比，只读访问本地 DSH 凭证，从不索要 API Key。",
+    "detail": "docs/DETAIL.zh-CN.md"
+  }
+}

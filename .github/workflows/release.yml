@@ -1,0 +1,66 @@
+name: Release
+
+# Publishing runs from a tag, never a branch push: `git tag v0.1.0 &&
+# git push origin v0.1.0` runs the suites, checks the packed file list,
+# verifies the tag matches the manifest, and publishes that exact version.
+#
+# Requires the repository secret NPM_TOKEN: an npm granular access token with
+# read/write for this package and "Bypass 2FA" enabled (npm rejects plain
+# tokens for publishing with a fresh 2FA challenge).
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: 'Run every check but skip npm publish'
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+
+      - name: Node-side suites
+        run: npm test
+
+      - name: Publishable tarball shape
+        run: npm run pack:check
+
+      - name: Version and tag agree
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          version="$(node -p "require('./package.json').version")"
+          if [ "$tag" != "$version" ]; then
+            echo "tag $tag does not match package.json $version" >&2
+            exit 1
+          fi
+
+      - name: Publish
+        if: startsWith(github.ref, 'refs/tags/v') && (github.event_name != 'workflow_dispatch' || inputs.dry-run == false)
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --access public
+
+      - name: GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true

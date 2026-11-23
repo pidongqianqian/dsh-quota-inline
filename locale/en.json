@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "Quota badge",
+    "description": "Shows the current model's balance or usage-window percentages in the composer tool row, immediately left of the model selector. Reads local DSH credentials read-only — never asks for an API key.",
+    "detail": "docs/DETAIL.md"
+  }
+}

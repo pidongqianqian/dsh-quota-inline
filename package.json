@@ -1,0 +1,65 @@
+{
+  "name": "dsh-quota-inline",
+  "version": "0.1.0",
+  "description": "Balance or usage-window reading in the composer tool row, immediately left of the model selector, for DeepSeek Harness.",
+  "license": "MIT",
+  "author": "pidongqianqian",
+  "type": "module",
+  "main": "index.js",
+  "icon": "./icon.svg",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "quota",
+    "balance",
+    "usage",
+    "deepseek"
+  ],
+  "homepage": "https://github.com/pidongqianqian/dsh-quota-inline#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pidongqianqian/dsh-quota-inline.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pidongqianqian/dsh-quota-inline/issues"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "docs"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-client-ui-settings"
+      ]
+    }
+  },
+  "scripts": {
+    "test": "node test/run.mjs",
+    "pack:check": "node tools/pack-check.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
